@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+    height: 100vh; /* Asegura que el cuerpo ocupe toda la altura de la ventana */
+    background-image: url('fondo2.gif'); /* Cambia esta ruta a la ubicación de tu imagen */
+    background-size: cover; /* Asegura que la imagen cubra toda la pantalla */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que el fondo se repita */
+    cursor: crosshair; /* Cambia el cursor a crosshair */
+}

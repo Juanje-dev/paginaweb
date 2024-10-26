@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Personalizada</title>
+    
+    <!-- Iconos de Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Cargar la fuente de Naruto */
+        @font-face {
+            font-family: 'Naruto';
+            src: url('ninja_naruto.ttf') format('truetype'); /* Asegúrate de que el archivo de fuente esté en la misma carpeta */
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('fondo2.gif');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: crosshair;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Evitar scroll */
+        }
+
+        /* Pantalla de inicio */
+        .start-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10; /* Asegúrate de que esté por encima del resto del contenido */
+            backdrop-filter: blur(5px); /* Desenfocar el fondo */
+            transition: opacity 0.5s ease; /* Transición suave */
+        }
+
+        .start-screen.hidden {
+            opacity: 0;
+            pointer-events: none; /* Evitar interacciones cuando está oculto */
+        }
+
+        .start-button {
+            padding: 20px 40px;
+            font-size: 24px;
+            color: white;
+            background-color: rgba(0, 123, 255, 0.5); /* Fondo transparente */
+            border: 2px solid white; /* Borde para visibilidad */
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: 200px; /* Ancho fijo para el botón */
+            height: 80px; /* Alto fijo para el botón */
+            display: flex; /* Para centrar el texto */
+            justify-content: center; /* Centrar horizontalmente */
+            align-items: center; /* Centrar verticalmente */
+            text-align: center; /* Alinear el texto */
+            animation: float 3s ease-in-out infinite; /* Añadir animación de movimiento */
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); } /* Elevar hacia arriba */
+            100% { transform: translateY(0); }
+        }
+
+        .start-button:hover {
+            background-color: rgba(0, 123, 255, 0.7); /* Color al pasar el ratón */
+        }
+
+        /* Título con fuente y efecto glitch */
+        .title {
+            font-family: 'Naruto', sans-serif;
+            font-size: 80px;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            position: relative;
+            animation: glitch 1.5s infinite;
+            text-shadow: -1px -1px 3px rgba(0, 0, 0, 0.8), 2px 2px 3px rgba(0, 0, 0, 0.8);
+            z-index: 1; /* Para que esté encima del fondo */
+        }
+
+        .title::before, .title::after {
+            content: "La Parca";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            color: black;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .title::before {
+            left: 3px;
+            text-shadow: -2px -2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .title::after {
+            left: -3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+            100% { transform: translate(0); }
+        }
+
+        .social-buttons {
+            display: grid;
+            grid-template-columns: repeat(2, auto);
+            gap: 20px;
+            opacity: 0;
+            animation: slide-in 2.5s ease forwards;
+            transform: translateY(-20px);
+        }
+
+        .btn {
+            width: 80px;
+            height: 80px;
+            font-size: 30px;
+            color: white;
+            border: 2px solid transparent;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none; /* Quita la línea de debajo */
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50px;
+            border: 2px solid white;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover::before {
+            transform: scale(1);
+        }
+
+        .btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-github { background-color: #333; }
+        .btn-instagram { background-color: #E4405F; }
+        .btn-steam { background-color: #171a21; }
+        .btn-spotify { background-color: #1DB954; } /* Verde de Spotify */
+
+        .spotify-player {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            width: 300px;
+            height: 80px;
+            border-radius: 12px;
+            z-index: 1; /* Asegúrate de que esté encima del fondo */
+        }
+
+        @keyframes slide-in {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Pantalla de inicio -->
+    <div class="start-screen" id="start-screen">
+        <button class="start-button" id="start-button">Comenzar</button>
+    </div>
+
+    <!-- Título con efecto glitch -->
+    <h1 class="title" id="main-content" style="display: none;">La Parca</h1>
+
+    <div class="social-buttons" id="social-buttons" style="display: none;">
+        <a href="https://www.instagram.com/jjuanje_/" target="_blank" class="btn btn-instagram">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://github.com/Juanje-dev" target="_blank" class="btn btn-github">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="https://steamcommunity.com/profiles/76561198352623436/" target="_blank" class="btn btn-steam">
+            <i class="fab fa-steam"></i>
+        </a>
+        <a href="https://open.spotify.com/playlist/5gtWiztQlgB2Zykpr1Kkk9?si=8afa0f19232940d6" target="_blank" class="btn btn-spotify">
+            <i class="fab fa-spotify"></i> <!-- Icono de Spotify -->
+        </a>
+    </div>
+
+    <!-- Reproductor de Spotify en la esquina inferior derecha -->
+    <iframe class="spotify-player"
+            src="https://open.spotify.com/embed/track/53NZHEKV3oJx2PdEpGBhYg?utm_source=generator" 
+            frameborder="0" 
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture" 
+            allowfullscreen>
+    </iframe>
+
+    <script>
+        // Ocultar la pantalla de inicio y mostrar el contenido principal
+        document.getElementById('start-button').addEventListener('click', function() {
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('social-buttons').style.display = 'grid';
+        });
+    </script>
+</body>
+</html>
